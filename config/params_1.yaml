@@ -1,5 +1,18 @@
+# [Camera Hardware Control Guide]
+# 1. Values in this config file are written directly to the camera hardware
+#    registers via v4l2 system calls (ioctl) when the node starts. (see usb_cam_node.cpp)
+#
+# 2. Value application logic:
+#    - Integer: setting -1 keeps the hardware's current value; any value >= 0 is forced.
+#    - Boolean: setting false switches to Manual mode and injects the related manual control value.
+#
+# 3. Recommended settings:
+#    - When using autoexposure: false → keep exposure at or below 156 (prevents 30 FPS drop)
+#    - exposure_dynamic_framerate: 0 recommended → prevents FPS drop caused by exposure length
+#    - power_line_frequency: 2 recommended → 60 Hz (suppresses flicker for KR/US mains frequency)
+
 # [카메라 하드웨어 제어 가이드]
-# 1. 본 설정 파일의 수치는 노드 실행 시 v4l2 시스템 콜(ioctl)을 통해 
+# 1. 본 설정 파일의 수치는 노드 실행 시 v4l2 시스템 콜(ioctl)을 통해
 #    카메라 하드웨어 레지스터에 직접 쓰여집니다. (usb_cam_node.cpp 참조)
 #
 # 2. 값 적용 로직:
