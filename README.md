@@ -9,12 +9,7 @@ For ros1 documentation, see [the ROS wiki](http://ros.org/wiki/usb_cam).
 
 ## Supported ROS 2 Distros and Platforms
 
-This fork's CI only validates against **Humble, Jazzy, and Kilted**. `rolling` and `lyrical` are intentionally excluded from CI (see `.github/workflows/build_test.yml`) and are not supported. Please create an issue if you experience any problems on these platforms.
-
-Windows: TBD/Untested/Unproven
-MacOS: TBD/Untested/Unproven
-
-For either MacOS or Windows - if you would like to try and get it working please create an issue to document your effort. If it works we can add it to the instructions here!
+This fork's CI only validates against **Humble, Jazzy, and Kilted**. `rolling` and `lyrical` are intentionally excluded from CI (see `.github/workflows/build_test.yml`) and are not supported.
 
 ## Quickstart
 
