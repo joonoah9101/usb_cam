@@ -93,6 +93,9 @@ jobs:
           - { ros_distro: humble, cxx_compiler: g++-14 }
           - { ros_distro: humble, cxx_compiler: clang-16 }
           - { ros_distro: humble, cxx_compiler: clang-18 }
+          # rolling is a perpetually moving target (no fixed package set),
+          # so it's excluded to avoid chasing constantly shifting breakage.
+          - { ros_distro: rolling }
 
     container:
       image: rostooling/setup-ros-docker:${{ matrix.docker_image }}
