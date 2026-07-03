@@ -96,6 +96,10 @@ jobs:
           # rolling is a perpetually moving target (no fixed package set),
           # so it's excluded to avoid chasing constantly shifting breakage.
           - { ros_distro: rolling }
+          # lyrical requires source changes (deprecated API usage, toolchain
+          # ABI issues) that aren't worth maintaining since only humble/jazzy
+          # are actually used.
+          - { ros_distro: lyrical }
 
     container:
       image: rostooling/setup-ros-docker:${{ matrix.docker_image }}
@@ -103,8 +107,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get -y install policykit-1 || sudo apt-get -y install polkitd pkexec
-          sudo apt-get -y install libgtk2.0-common screen uml-utilities libc6-dev libicu-dev gcc python3 python3-pip
+          sudo apt-get -y install policykit-1 libgtk2.0-common screen uml-utilities libc6-dev libicu-dev gcc python3 python3-pip
           sudo apt-get -y install ${{ matrix.cc_compiler }} ${{ matrix.cxx_compiler }}
           mkdir renode_portable
           wget https://builds.renode.io/renode-latest.linux-portable.tar.gz
