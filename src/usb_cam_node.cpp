@@ -45,8 +45,8 @@ UsbCamNode::UsbCamNode(const rclcpp::NodeOptions & node_options)
   m_image_msg(new sensor_msgs::msg::Image()),
   m_compressed_img_msg(nullptr),
   m_image_publisher(std::make_shared<image_transport::CameraPublisher>(
-    image_transport::create_camera_publisher(this, BASE_TOPIC_NAME,
-    rclcpp::SensorDataQoS().get_rmw_qos_profile()))),
+      image_transport::create_camera_publisher(this, BASE_TOPIC_NAME,
+      rclcpp::SensorDataQoS().get_rmw_qos_profile()))),
   m_compressed_image_publisher(nullptr),
   m_compressed_cam_info_publisher(nullptr),
   m_parameters(),
@@ -85,7 +85,7 @@ UsbCamNode::UsbCamNode(const rclcpp::NodeOptions & node_options)
   this->declare_parameter("focus", -1);  // 0-255, -1 "leave alone"
   this->declare_parameter("skip_device_check", false);  // allow bypassing V4L2 device list check
   this->declare_parameter("exposure_dynamic_framerate", -1);  // 0=off, 1=on, -1 "leave alone"
-  this->declare_parameter("power_line_frequency", -1);        // 0=disabled,1=50Hz,2=60Hz,-1 "leave alone"
+  this->declare_parameter("power_line_frequency", -1);  // 0=disabled,1=50Hz,2=60Hz,-1 "leave alone"
 
   get_params();
   init();
@@ -230,8 +230,8 @@ void UsbCamNode::init()
   if (static_cast<size_t>(m_parameters.framerate) > frame_rate) {
     RCLCPP_WARN_STREAM(
       this->get_logger(),
-      "Desired framerate " << m_parameters.framerate << " is higher than the camera's capability " <<
-        frame_rate << " fps");
+      "Desired framerate " << m_parameters.framerate <<
+        " is higher than the camera's capability " << frame_rate << " fps");
     m_parameters.framerate = frame_rate;
   }
 
@@ -355,7 +355,7 @@ void UsbCamNode::set_v4l2_params()
 
   // check auto white balance
   if (m_parameters.auto_white_balance) {
-    // 변경: white_balance_temperature_auto -> white_balance_automatic
+    // renamed: white_balance_temperature_auto -> white_balance_automatic
     m_camera->set_v4l_parameter("white_balance_automatic", 1);
     RCLCPP_INFO(this->get_logger(), "Setting 'white_balance_automatic' to %d", 1);
   } else {
@@ -367,23 +367,25 @@ void UsbCamNode::set_v4l2_params()
   // check auto exposure
   if (!m_parameters.autoexposure) {
     RCLCPP_INFO(this->get_logger(), "Setting 'auto_exposure' to %d", 1);
-    RCLCPP_INFO(this->get_logger(), "Setting 'exposure_time_absolute' to %d", m_parameters.exposure);
-    // 변경: exposure_auto -> auto_exposure
-    // 변경: exposure_absolute -> exposure_time_absolute
+    RCLCPP_INFO(
+      this->get_logger(), "Setting 'exposure_time_absolute' to %d",
+      m_parameters.exposure);
+    // renamed: exposure_auto -> auto_exposure
+    // renamed: exposure_absolute -> exposure_time_absolute
     // turn down exposure control (from max of 3)
-    m_camera->set_v4l_parameter("auto_exposure", 1); // 1은 Manual Mode
+    m_camera->set_v4l_parameter("auto_exposure", 1);  // 1 = Manual Mode
     // change the exposure level
     m_camera->set_v4l_parameter("exposure_time_absolute", m_parameters.exposure);
   } else {
     RCLCPP_INFO(this->get_logger(), "Setting 'auto_exposure' to %d", 3);
-    m_camera->set_v4l_parameter("auto_exposure", 3); // 3은 Aperture Priority Mode
+    m_camera->set_v4l_parameter("auto_exposure", 3);  // 3 = Aperture Priority Mode
   }
 
   // check auto focus
   if (m_parameters.autofocus) {
     m_camera->set_auto_focus(1);
     RCLCPP_INFO(this->get_logger(), "Setting 'focus_automatic_continuous' to %d", 1);
-    // 변경: focus_auto -> focus_automatic_continuous
+    // renamed: focus_auto -> focus_automatic_continuous
     m_camera->set_v4l_parameter("focus_automatic_continuous", 1);
   } else {
     RCLCPP_INFO(this->get_logger(), "Setting 'focus_automatic_continuous' to %d", 0);
@@ -399,7 +401,9 @@ void UsbCamNode::set_v4l2_params()
     RCLCPP_INFO(
       this->get_logger(), "Setting 'exposure_dynamic_framerate' to %d",
       m_parameters.exposure_dynamic_framerate);
-    m_camera->set_v4l_parameter("exposure_dynamic_framerate", m_parameters.exposure_dynamic_framerate);
+    m_camera->set_v4l_parameter(
+      "exposure_dynamic_framerate",
+      m_parameters.exposure_dynamic_framerate);
   }
 
   // check power_line_frequency
@@ -409,7 +413,6 @@ void UsbCamNode::set_v4l2_params()
       m_parameters.power_line_frequency);
     m_camera->set_v4l_parameter("power_line_frequency", m_parameters.power_line_frequency);
   }
-
 }  // set_v4l2_params
 
 bool UsbCamNode::take_and_send_image()
