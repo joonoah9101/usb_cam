@@ -1,23 +1,51 @@
-/**:
+# [카메라 하드웨어 제어 가이드]
+# 1. 본 설정 파일의 수치는 노드 실행 시 v4l2 시스템 콜(ioctl)을 통해 
+#    카메라 하드웨어 레지스터에 직접 쓰여집니다. (usb_cam_node.cpp 참조)
+#
+# 2. 값 적용 로직:
+#    - 정수형(int): -1로 설정 시 하드웨어의 현재 값을 유지하며, 0 이상의 값은 강제로 적용됨.
+#    - 논리형(bool): false 설정 시 수동(Manual) 모드로 전환되며, 관련 수동 제어값이 주입됨.
+#
+# 3. 권장 설정:
+#    - autoexposure: false 사용 시 → exposure 156 이하 유지 (30 FPS 드랍 방지)
+#    - exposure_dynamic_framerate: 0 권장 → 노출 길이에 의한 FPS 드랍 방지
+#    - power_line_frequency: 2 권장 → 60 Hz (한국/미국 전원 주파수 기준 플리커 억제)
+
+camera1:
     ros__parameters:
-      video_device: "/dev/video0"
+      video_device: "/dev/v4l/by-id/usb-DCXIN_DCXIN_Camera_01.00.000-video-index0"
       framerate: 30.0
       io_method: "mmap"
-      frame_id: "camera"
-      pixel_format: "mjpeg2rgb"  # see usb_cam/supported_formats for list of supported formats
+      frame_id: "camera1"
+      pixel_format: "yuyv" # see usb_cam/supported_formats for list of supported formats
       av_device_format: "YUV422P"
       image_width: 640
-      image_height: 480
-      camera_name: "test_camera"
-      camera_info_url: "package://usb_cam/config/camera_info.yaml"
-      brightness: -1
-      contrast: -1
-      saturation: -1
-      sharpness: -1
-      gain: -1
+      image_height: 360
+      camera_name: "dcxin_camera"
+      camera_info_url: "package://usb_cam/config/camera1_info.yaml"
+
+      # --- User Controls ---
+      brightness: 128        # range: 0-255 (Default: 128)
+      contrast: 65           # range: 0-128 (Default: 65)
+      saturation: 76         # range: 0-128 (Default: 76)
+      sharpness: 2000        # range: 15-33210 (Default: 2000)
+      gain: 48               # range: 0-48 (Default: 48)
+
+      # --- White Balance ---
+      # true: white_balance_automatic=1, false: white_balance_automatic=0
       auto_white_balance: true
-      white_balance: 4000
+      white_balance: 4650    # range: 2800-6500 (Default: 4650)
+
+      # --- Exposure ---
+      # true: auto_exposure=3 (Aperture Priority), false: auto_exposure=1 (Manual)
       autoexposure: true
-      exposure: 100
+      exposure: 156          # range: 1-10000 (Default: 156)
+
+      # --- Focus ---
+      # true: focus_automatic_continuous=1, false: focus_automatic_continuous=0
       autofocus: false
-      focus: -1
+      focus: 0               # range: 0-1023 (Default: 0)
+
+      # --- Framerate & Flicker ---
+      exposure_dynamic_framerate: 0   # 0=off (recommended), 1=on,    -1=leave alone
+      power_line_frequency: 2         # 0=disabled, 1=50 Hz, 2=60 Hz, -1=leave alone

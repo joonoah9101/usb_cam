@@ -1,0 +1,20 @@
+image_width: 640
+image_height: 360
+camera_name: dcxin_camera
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [290.169562, 0.000000, 321.835060, 0.000000, 289.702725, 176.256662, 0.000000, 0.000000, 1.000000]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.012264, -0.006067, 0.000723, -0.000981, 0.000000]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [282.288879, 0.000000, 320.298402, 0.000000, 0.000000, 287.263397, 175.964484, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]

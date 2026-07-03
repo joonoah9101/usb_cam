@@ -1,0 +1,20 @@
+image_width: 640
+image_height: 480
+camera_name: global_s
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [239.173019, 0.000000, 316.039355, 0.000000, 239.248936, 247.351026, 0.000000, 0.000000, 1.000000]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.007097, -0.011607, 0.001218, 0.000586, 0.000000]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [224.254867, 0.000000, 316.093993, 0.000000, 0.000000, 234.322029, 248.890560, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]

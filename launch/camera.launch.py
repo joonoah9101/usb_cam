@@ -54,7 +54,12 @@ CAMERAS.append(
     )
     # Add more Camera's here and they will automatically be launched below
 )
-
+CAMERAS.append(
+    CameraConfig(
+        name='camera2',
+        param_path=Path(USB_CAM_DIR, 'config', 'params_2.yaml')
+    )
+)
 
 def generate_launch_description():
     ld = LaunchDescription()
