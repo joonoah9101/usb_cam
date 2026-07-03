@@ -100,7 +100,8 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get -y install policykit-1 libgtk2.0-common screen uml-utilities libc6-dev libicu-dev gcc python3 python3-pip
+          sudo apt-get -y install policykit-1 || sudo apt-get -y install polkitd pkexec
+          sudo apt-get -y install libgtk2.0-common screen uml-utilities libc6-dev libicu-dev gcc python3 python3-pip
           sudo apt-get -y install ${{ matrix.cc_compiler }} ${{ matrix.cxx_compiler }}
           mkdir renode_portable
           wget https://builds.renode.io/renode-latest.linux-portable.tar.gz
