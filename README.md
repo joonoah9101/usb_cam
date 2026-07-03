@@ -1,4 +1,4 @@
-# usb_cam [![ROS 2 CI](https://github.com/ros-drivers/usb_cam/actions/workflows/build_test.yml/badge.svg)](https://github.com/ros-drivers/usb_cam/actions/workflows/build_test.yml)
+# usb_cam [![ROS 2 CI](https://github.com/joonoah9101/usb_cam/actions/workflows/build_test.yml/badge.svg)](https://github.com/joonoah9101/usb_cam/actions/workflows/build_test.yml)
 
 > **Note:** This is a maintenance fork of [ros-drivers/usb_cam](https://github.com/ros-drivers/usb_cam), which has been inactive for a while. It includes fixes and modifications on top of the original codebase. See the [compare view](https://github.com/ros-drivers/usb_cam/compare/main...joonoah9101:usb_cam:main) for the full diff against upstream.
 
@@ -9,7 +9,7 @@ For ros1 documentation, see [the ROS wiki](http://ros.org/wiki/usb_cam).
 
 ## Supported ROS 2 Distros and Platforms
 
-All Officially supported Linux Distros and corresponding ROS 2 releases are supported. Please create an issue if you experience any problems on these platforms.
+This fork's CI only validates against **Humble, Jazzy, and Kilted**. `rolling` and `lyrical` are intentionally excluded from CI (see `.github/workflows/build_test.yml`) and are not supported. Please create an issue if you experience any problems on these platforms.
 
 Windows: TBD/Untested/Unproven
 MacOS: TBD/Untested/Unproven
