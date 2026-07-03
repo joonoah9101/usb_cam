@@ -1,5 +1,7 @@
 # usb_cam [![ROS 2 CI](https://github.com/ros-drivers/usb_cam/actions/workflows/build_test.yml/badge.svg)](https://github.com/ros-drivers/usb_cam/actions/workflows/build_test.yml)
 
+> **Note:** This is a maintenance fork of [ros-drivers/usb_cam](https://github.com/ros-drivers/usb_cam), which has been inactive for a while. It includes fixes and modifications on top of the original codebase. See the [compare view](https://github.com/ros-drivers/usb_cam/compare/main...joonoah9101:usb_cam:main) for the full diff against upstream.
+
 ## A ROS 2 Driver for V4L USB Cameras
 This package is based off of V4L devices specifically instead of just UVC.
 
