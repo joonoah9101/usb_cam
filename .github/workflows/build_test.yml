@@ -38,6 +38,11 @@ jobs:
           DISTRO_STR="["
           MATRIX_STR="["
           for distro in ${ACTIVE_ROS_DISTROS[@]}; do
+            # rolling and lyrical are not targeted by this fork; skip them
+            # here so they never end up in the include list either.
+            if [[ "$distro" == "rolling" || "$distro" == "lyrical" ]]; then
+              continue
+            fi
             docker_image=$(echo $RAW_DOCKER_JSON |
               jq -r --arg DISTRO "$distro" '.results[] | select(.tag_status=="active") | select(.name | contains("ros-base-latest")) | select(.name | contains($DISTRO)) | .name'  |
               sort -u)
@@ -93,13 +98,6 @@ jobs:
           - { ros_distro: humble, cxx_compiler: g++-14 }
           - { ros_distro: humble, cxx_compiler: clang-16 }
           - { ros_distro: humble, cxx_compiler: clang-18 }
-          # rolling is a perpetually moving target (no fixed package set),
-          # so it's excluded to avoid chasing constantly shifting breakage.
-          - { ros_distro: rolling }
-          # lyrical requires source changes (deprecated API usage, toolchain
-          # ABI issues) that aren't worth maintaining since only humble/jazzy
-          # are actually used.
-          - { ros_distro: lyrical }
 
     container:
       image: rostooling/setup-ros-docker:${{ matrix.docker_image }}
